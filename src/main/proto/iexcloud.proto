@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "IexCloudProto";
+option optimize_for = SPEED;
+
+package iexcloud.gen;
+
+service IexcloudService {
+
+  rpc GetSymbols (NoParam) returns (stream Symbol);
+  
+  rpc GetBalancesheets (Symbol) returns (BalanceSheetsGrpc);
+    
+  rpc GetIncomeStatements (Symbol) returns (IncomeStatementsGrpc);
+      
+  rpc GetCashflowStatements (Symbol) returns (CashflowStatementsGrpc);
+        
+  rpc GetPeers (Symbol) returns (stream Symbol);
+
+}
+
+message DecimalValue {
+  uint32 scale = 1;
+  uint32 precision = 2;
+  bytes value = 3;
+}
+
+message NoParam {
+}
+
+message Symbol {
+  string name = 1;
+}
+
+message BalanceSheetGrpc {
+  DecimalValue currentCash = 1;
+  DecimalValue shortTermInvestments = 2;
+  DecimalValue receivables = 3;
+  DecimalValue inventory = 4;
+  DecimalValue otherCurrentAssets = 5;
+  DecimalValue currentAssets = 6;
+  DecimalValue longTermInvestments = 7;
+  DecimalValue propertyPlantEquipment = 8;
+  DecimalValue goodwill = 9;
+  DecimalValue intangibleAssets = 10;
+  DecimalValue otherAssets = 11;
+  DecimalValue totalAssets = 12;
+  DecimalValue accountsPayable = 13;
+  DecimalValue currentLongTermDebt = 14;
+  DecimalValue otherCurrentLiabilities = 15;
+  DecimalValue totalCurrentLiabilities = 16;
+  DecimalValue longTermDebt = 17;
+  DecimalValue otherLiabilities = 18;
+  DecimalValue minorityInterest = 19;
+  DecimalValue totalLiabilities = 20;
+  DecimalValue commonStock = 21;
+  DecimalValue retainedEarnings = 22;
+  DecimalValue treasuryStock = 23;
+  DecimalValue capitalSurplus = 24;
+  DecimalValue shareholderEquity = 25;
+  DecimalValue netTangibleAssets = 26;
+  string symbol = 27;
+}
+
+message CashflowStatementGrpc {
+  DecimalValue netIncome = 1;
+  DecimalValue depreciation = 2;
+  DecimalValue changesInReceivables = 3;
+  DecimalValue changesInInventories = 4;
+  DecimalValue cashChange = 5;
+  DecimalValue cashFlow = 6;
+  DecimalValue capitalExpenditures = 7;
+  DecimalValue investments = 8;
+  DecimalValue investingActivityOther = 9;
+  DecimalValue totalInvestingCashFlows = 10;
+  DecimalValue dividendsPaid = 11;
+  DecimalValue netBorrowings = 12;
+  DecimalValue otherFinancingCashFlows = 13;
+  DecimalValue cashFlowFinancing = 14;
+  DecimalValue exchangeRateEffect = 15;
+  string symbol = 16;
+}
+
+message IncomeStatementGrpc {
+  DecimalValue totalRevenue = 1;
+  DecimalValue costOfRevenue = 2;
+  DecimalValue ebit = 3;
+  DecimalValue grossProfit = 4;
+  DecimalValue incomeTax = 5;
+  DecimalValue interestIncome = 6;
+  DecimalValue minorityInterest = 7;
+  DecimalValue netIncome = 8;
+  DecimalValue netIncomeBasic = 9;
+  DecimalValue operatingExpense = 10;
+  DecimalValue operatingIncome = 11;
+  DecimalValue otherIncomeExpenseNet = 12;
+  DecimalValue pretaxIncome = 13;
+  DecimalValue researchAndDevelopment = 14;
+  DecimalValue sellingGeneralAndAdmin = 15;
+  string symbol = 16;
+}
+
+message BalanceSheetsGrpc {
+  repeated BalanceSheetGrpc balanceSheetGrpc = 1;
+}
+
+message CashflowStatementsGrpc {
+  repeated CashflowStatementGrpc cashflowStatementGrpc = 1;
+}
+
+message IncomeStatementsGrpc {
+  repeated IncomeStatementGrpc incomeStatementGrpc = 1;
+}

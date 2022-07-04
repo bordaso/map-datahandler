@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ec33nw-datahandler
+  labels:
+    app: ec33nw-datahandler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ec33nw-datahandler
+  template:
+    metadata:
+      labels:
+        app: ec33nw-datahandler
+    spec:
+      containers:
+      - name: ec33nw-datahandler
+        image: zedas/ec33nw-map-datahandler
+        ports:
+        - containerPort: 8080
+        - containerPort: 8980
+        imagePullPolicy: IfNotPresent
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ec33nw-datahandler-service
+spec:
+  selector:
+    app: ec33nw-datahandler
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      name: resttestport
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30080
+    - port: 8980
+      name: grcpport
+      protocol: TCP
+      targetPort: 8980
+      nodePort: 30980
+
+
