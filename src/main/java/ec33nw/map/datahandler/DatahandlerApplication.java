@@ -17,7 +17,7 @@ public class DatahandlerApplication {
 		
 		IexCloudGrpcServer server;
 		try {
-			server = new IexCloudGrpcServer(8980);
+			server = new IexCloudGrpcServer(50051);
 		    server.start();
 		    server.blockUntilShutdown();
 		} catch (IOException e) {

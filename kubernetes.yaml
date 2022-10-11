@@ -19,7 +19,7 @@ spec:
         image: zedas/ec33nw-map-datahandler
         ports:
         - containerPort: 8080
-        - containerPort: 8980
+        - containerPort: 50051
         imagePullPolicy: IfNotPresent
 
 ---
@@ -35,10 +35,10 @@ spec:
       name: resttestport
       protocol: TCP
       targetPort: 8080
-    - port: 8980
+    - port: 50051
       name: grcpport
       protocol: TCP
-      targetPort: 8980
+      targetPort: 50051
   selector:
     app: ec33nw-datahandler
 
