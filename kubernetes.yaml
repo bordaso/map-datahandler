@@ -19,8 +19,8 @@ spec:
         image: zedas/ec33nw-map-datahandler
         ports:
         - containerPort: 8080
-        - containerPort: 50051
-        imagePullPolicy: IfNotPresent
+        - containerPort: 8980
+        imagePullPolicy: Always
 
 ---
 
@@ -29,40 +29,11 @@ kind: Service
 metadata:
   name: ec33nw-datahandler-service
 spec:
-  type: ClusterIP
-  ports:
-    - port: 8080
-      name: resttestport
-      protocol: TCP
-      targetPort: 8080
-    - port: 50051
-      name: grcpport
-      protocol: TCP
-      targetPort: 50051
   selector:
     app: ec33nw-datahandler
-
----
-
-kind: Ingress
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: ingress
-  annotations:
-    dev.okteto.com/generate-host: "true"
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-spec:
-  rules:
-    - host: this-name-does-not-matter
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: ec33nw-datahandler-service
-                port:
-                  name: grcpport
+  ports:
+    - port: 8980
+      name: grcpport
+      protocol: TCP
+      targetPort: 8980
 
