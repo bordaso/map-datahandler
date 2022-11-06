@@ -2,8 +2,11 @@ package ec33nw.map.datahandler.controllers.iexcloud.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ec33nw.map.datahandler.entity.Tutorial;
+import ec33nw.map.datahandler.repository.ITutorialRepository;
 import pl.zankowski.iextrading4j.api.refdata.v1.ExchangeSymbol;
 import pl.zankowski.iextrading4j.api.stocks.v1.BalanceSheets;
 import pl.zankowski.iextrading4j.api.stocks.v1.CashFlows;
@@ -20,6 +23,9 @@ import pl.zankowski.iextrading4j.client.rest.request.stocks.v1.IncomeStatementRe
 
 @Service
 public class IexCloudService {
+	
+	@Autowired
+	private ITutorialRepository tutorialRepository;
 
 	private static final String SANDBOX_TOKEN = "Tpk_2f56411b27df448f80fe029e05d3e67e";
 	private static final IEXCloudClient cloudClient = IEXTradingClient.create(
@@ -32,6 +38,8 @@ public class IexCloudService {
 	}
 
 	public BalanceSheets getBalanceSheets(String symbol) {
+	//	Tutorial _tutorial = tutorialRepository.save(new Tutorial("test_title", "test_desc", false));
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>       "+tutorialRepository.findAll());
 		final BalanceSheets balanceSheets = cloudClient
 				.executeRequest(new BalanceSheetRequestBuilder().withSymbol(symbol).build());
 		return balanceSheets;
